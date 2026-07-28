@@ -10,9 +10,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @SuperBuilder
 public class Booking {
+    private int id;
     private Guest guest;
     private Room room;
     private LocalDate arrivalDate;
     private LocalDate departureDate;
     private int partySize;
+
+    @Override
+    public String toString(){
+        return "Booking No." + id +
+               " | Guest: " + guest.getDisplayGuest() +
+               " | " + room.getDisplayRoom() +
+               " | Number of Guests: " + partySize +
+               "\nArrival Date: " + arrivalDate +
+               " | Departure Date: " + departureDate;
+    }
 }

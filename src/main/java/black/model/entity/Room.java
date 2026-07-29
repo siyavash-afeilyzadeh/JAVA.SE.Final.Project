@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @SuperBuilder
 public class Room {
     private int id;
     private int roomNumber;
-    private double price;
-    private int capacity;
+    private BigDecimal pricePerNight;
+    private int roomCapacity;
     private RoomClass roomClass;
 
     public String getDisplayRoom(){

@@ -1,7 +1,7 @@
 package black.model.entity.enums;
 
 public enum RoomClass {
-    Standard,
+    STANDARD,
     DELUXE,
     SUITE
 }

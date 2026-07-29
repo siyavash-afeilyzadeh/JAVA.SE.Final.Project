@@ -8,7 +8,6 @@ import black.model.entity.enums.RoomClass;
 import black.utils.ConnectionProvider;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class BookingDA implements AutoCloseable {
     public void save(Booking booking) throws SQLException {
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
-                "select booking_seq.nextVal as NEXT_ID from dual"
+                "select BOOKING_SEQ.nextVal as NEXT_ID from dual"
         );
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();

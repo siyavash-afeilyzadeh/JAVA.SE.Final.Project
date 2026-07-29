@@ -24,6 +24,6 @@ public class Guest {
         ? "Passport Number: " + passportNumber
         : "National ID: " + nationalID);
 
-        return firstName + " " + firstName + identity;
+        return firstName + " " + lastName + "/ " + identity;
     }
 }

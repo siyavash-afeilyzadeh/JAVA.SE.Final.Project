@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
-@SuperBuilder
 public class Room {
     private int id;
     private int roomNumber;
@@ -19,5 +18,11 @@ public class Room {
 
     public String getDisplayRoom(){
         return "Room No." + roomNumber + "/ " + roomClass;
+    }
+
+    public Room(int id, int roomNumber, RoomClass roomClass){
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.roomClass = roomClass;
     }
 }

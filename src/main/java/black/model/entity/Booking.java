@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@SuperBuilder
 public class Booking {
     private int id;
     private Guest guest;
@@ -25,5 +24,14 @@ public class Booking {
                " | Number of Guests: " + partySize +
                "\nArrival Date: " + arrivalDate +
                " | Departure Date: " + departureDate;
+    }
+
+    public Booking(int id, Guest guest, Room room, LocalDate arrivalDate, LocalDate departureDate, int partySize){
+        this.id = id;
+        this.guest = guest;
+        this.room = room;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.partySize = partySize;
     }
 }

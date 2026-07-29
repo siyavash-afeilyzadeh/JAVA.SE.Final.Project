@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@SuperBuilder
 public class Guest {
     private int id;
     private String firstName;
@@ -19,11 +18,23 @@ public class Guest {
     private String nationalID;
     private LocalDate birthDate;
 
-    public String getDisplayGuest(){
-        String identity = (passportNumber != null && !passportNumber.isBlank()
-        ? "Passport Number: " + passportNumber
-        : "National ID: " + nationalID);
+    public String getDisplayGuest() {
+        String identity;
+        if (passportNumber != null && !passportNumber.isBlank()) {
+            identity = "Passport Number: " + passportNumber;
+        } else if (nationalID != null && !nationalID.isBlank()) {
+            identity = "National ID: " + nationalID;
+        } else {
+            identity = "No Identification Registered";
+        }
 
         return firstName + " " + lastName + "/ " + identity;
+    }
+
+    public Guest(int id, String firstName, String lastName, GuestType guestType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.guestType = guestType;
     }
 }

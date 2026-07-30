@@ -3,10 +3,13 @@ package black.model.entity;
 import black.model.entity.enums.GuestType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@SuperBuilder
 public class Guest {
     private int id;
     private String firstName;

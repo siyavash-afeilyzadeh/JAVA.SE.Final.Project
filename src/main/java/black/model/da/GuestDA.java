@@ -57,6 +57,69 @@ public class GuestDA implements AutoCloseable {
         preparedStatement.execute();
     }
 
+    public Guest findByID(int id) throws Exception {
+        Guest guest = null;
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE ID=?");
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet =preparedStatement.executeQuery();
+        if(resultSet.next()){
+            guest = Guest
+                    .builder()
+                    .id(resultSet.getInt("id"))
+                    .firstName(resultSet.getString("firstName"))
+                    .lastName(resultSet.getString("lastName"))
+                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
+                    .passportNumber(resultSet.getString("passportNumber"))
+                    .nationalID(resultSet.getString("nationalID"))
+                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .build();
+        }
+        return guest;
+    }
+
+    public Guest findByName(String firstName) throws Exception {
+        Guest guest = null;
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE FIRST_NAME=?");
+        preparedStatement.setString(1, firstName);
+        ResultSet resultSet =preparedStatement.executeQuery();
+        if(resultSet.next()){
+            guest = Guest
+                    .builder()
+                    .id(resultSet.getInt("id"))
+                    .firstName(resultSet.getString("firstName"))
+                    .lastName(resultSet.getString("lastName"))
+                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
+                    .passportNumber(resultSet.getString("passportNumber"))
+                    .nationalID(resultSet.getString("nationalID"))
+                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .build();
+        }
+        return guest;
+    }
+
+    public Guest findByFamily(String lastName) throws Exception {
+        Guest guest = null;
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE LAST_NAME=?");
+        preparedStatement.setString(1, lastName);
+        ResultSet resultSet =preparedStatement.executeQuery();
+        if(resultSet.next()){
+            guest = Guest
+                    .builder()
+                    .id(resultSet.getInt("id"))
+                    .firstName(resultSet.getString("firstName"))
+                    .lastName(resultSet.getString("lastName"))
+                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
+                    .passportNumber(resultSet.getString("passportNumber"))
+                    .nationalID(resultSet.getString("nationalID"))
+                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .build();
+        }
+        return guest;
+    }
+
     @Override
     public void close() throws Exception {
         preparedStatement.close();

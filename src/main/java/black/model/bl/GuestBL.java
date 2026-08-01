@@ -2,43 +2,87 @@ package black.model.bl;
 
 import black.model.da.GuestDA;
 import black.model.entity.Guest;
+import black.model.entity.enums.GuestType;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 public class GuestBL {
-    public void save(Guest guest) throws Exception{
-        try(GuestDA guestDA = new GuestDA()) {
-            if(!guest.getBirthDate().isAfter(LocalDate.now().minusYears(18))){
-                guestDA.save(guest);
+    //--------------Validation Methods--------------
+    public void validateAge(Guest guest) throws Exception {
+        if (guest.getBirthDate().isAfter(LocalDate.now().minusYears(18))) {
+            throw new Exception("Guest must be at least 18 years old.");
+        }
+    }
+
+    public void validateIdentity(Guest guest, GuestDA guestDA) throws Exception {
+        if (guest.getGuestType() == GuestType.DOMESTIC) {
+            Guest dup = guestDA.findByNationalID(guest.getNationalID());
+            if (dup != null && dup.getId() != guest.getId()) {
+                throw new Exception("This National ID is already registered.");
+            }
+        } else if (guest.getGuestType() == GuestType.FOREIGN) {
+            Guest dup = guestDA.findByPassportNumber(guest.getPassportNumber());
+            if (dup != null && dup.getId() != guest.getId()) {
+                throw new Exception("This passport number is already registered.");
             }
         }
     }
-    public void update(Guest guest) throws Exception{
-        try(GuestDA guestDA = new GuestDA()){
-            if(!guest.getBirthDate().isAfter(LocalDate.now().minusYears(18))){
-                guestDA.update(guest);
-            }
+
+
+    //--------------Business Logic Methods--------------
+
+    public void save(Guest guest) throws Exception {
+        validateAge(guest);
+        try (GuestDA guestDA = new GuestDA()) {
+            validateIdentity(guest, guestDA);
+            guestDA.save(guest);
         }
     }
-    public void delete(int id) throws Exception{
-        try(GuestDA guestDA = new GuestDA()){
+
+    public void update(Guest guest) throws Exception {
+        validateAge(guest);
+        try (GuestDA guestDA = new GuestDA()) {
+            validateIdentity(guest, guestDA);
+            guestDA.update(guest);
+        }
+    }
+
+    public void delete(int id) throws Exception {
+        try (GuestDA guestDA = new GuestDA()) {
             guestDA.delete(id);
         }
     }
-    public Guest findByID(int id) throws Exception{
-        try(GuestDA guestDA = new GuestDA()){
+
+    public Guest findByID(int id) throws Exception {
+        try (GuestDA guestDA = new GuestDA()) {
             return guestDA.findByID(id);
         }
     }
-    public Guest findByName(String firstName) throws Exception{
-        try(GuestDA guestDA = new GuestDA()){
+
+    public List<Guest> findByName(String firstName) throws Exception {
+        try (GuestDA guestDA = new GuestDA()) {
             return guestDA.findByName(firstName);
         }
     }
-    public Guest findByFamily(String lastName) throws Exception{
-        try(GuestDA guestDA = new GuestDA()){
+
+    public List<Guest> findByFamily(String lastName) throws Exception {
+        try (GuestDA guestDA = new GuestDA()) {
             return guestDA.findByFamily(lastName);
         }
     }
+
+    public Guest findByNationalID(String nationalId) throws Exception{
+        try (GuestDA guestDA = new GuestDA()){
+            return guestDA.findByNationalID(nationalId);
+        }
+    }
+
+    public Guest findByPassportNumber(String passportNumber) throws Exception{
+        try (GuestDA guestDA = new GuestDA()) {
+            return guestDA.findByPassportNumber(passportNumber);
+        }
+    }
 }
+

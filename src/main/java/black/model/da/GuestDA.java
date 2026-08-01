@@ -5,6 +5,8 @@ import black.model.entity.enums.GuestType;
 import black.utils.ConnectionProvider;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuestDA implements AutoCloseable {
     private ConnectionProvider connectionProvider = new ConnectionProvider();
@@ -60,61 +62,112 @@ public class GuestDA implements AutoCloseable {
     public Guest findByID(int id) throws Exception {
         Guest guest = null;
         connection = connectionProvider.getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE ID=?");
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM GUESTS WHERE ID=?");
         preparedStatement.setInt(1, id);
-        ResultSet resultSet =preparedStatement.executeQuery();
-        if(resultSet.next()){
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
             guest = Guest
                     .builder()
-                    .id(resultSet.getInt("id"))
-                    .firstName(resultSet.getString("firstName"))
-                    .lastName(resultSet.getString("lastName"))
-                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
-                    .passportNumber(resultSet.getString("passportNumber"))
-                    .nationalID(resultSet.getString("nationalID"))
-                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .id(resultSet.getInt("ID"))
+                    .firstName(resultSet.getString("FIRST_NAME"))
+                    .lastName(resultSet.getString("LAST_NAME"))
+                    .guestType(GuestType.valueOf(resultSet.getString("GUEST_TYPE")))
+                    .passportNumber(resultSet.getString("PASSPORT_NUMBER"))
+                    .nationalID(resultSet.getString("NATIONAL_ID"))
+                    .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
         }
         return guest;
     }
 
-    public Guest findByName(String firstName) throws Exception {
-        Guest guest = null;
+    public List<Guest> findByName(String firstName) throws Exception {
+        List<Guest> guestList = new ArrayList<>();
         connection = connectionProvider.getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE FIRST_NAME=?");
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM GUESTS WHERE FIRST_NAME=?");
         preparedStatement.setString(1, firstName);
-        ResultSet resultSet =preparedStatement.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Guest guest = Guest
+                    .builder()
+                    .id(resultSet.getInt("ID"))
+                    .firstName(resultSet.getString("FIRST_NAME"))
+                    .lastName(resultSet.getString("LAST_NAME"))
+                    .guestType(GuestType.valueOf(resultSet.getString("GUEST_TYPE")))
+                    .passportNumber(resultSet.getString("PASSPORT_NUMBER"))
+                    .nationalID(resultSet.getString("NATIONAL_ID"))
+                    .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
+                    .build();
+            guestList.add(guest);
+        }
+        return guestList;
+    }
+
+    public List<Guest> findByFamily(String lastName) throws Exception {
+        List<Guest> guestList = new ArrayList<>();
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement("" +
+                "SELECT * FROM GUESTS WHERE LAST_NAME=?");
+        preparedStatement.setString(1, lastName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Guest guest = Guest
+                    .builder()
+                    .id(resultSet.getInt("ID"))
+                    .firstName(resultSet.getString("FIRST_NAME"))
+                    .lastName(resultSet.getString("LAST_NAME"))
+                    .guestType(GuestType.valueOf(resultSet.getString("GUEST_TYPE")))
+                    .passportNumber(resultSet.getString("PASSPORT_NUMBER"))
+                    .nationalID(resultSet.getString("NATIONAL_ID"))
+                    .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
+                    .build();
+            guestList.add(guest);
+        }
+        return guestList;
+    }
+
+    public Guest findByNationalID(String nationalId) throws Exception {
+        Guest guest = null;
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM GUESTS WHERE NATIONAL_ID=?"
+        );
+        preparedStatement.setString(1, nationalId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
             guest = Guest
                     .builder()
-                    .id(resultSet.getInt("id"))
-                    .firstName(resultSet.getString("firstName"))
-                    .lastName(resultSet.getString("lastName"))
-                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
-                    .passportNumber(resultSet.getString("passportNumber"))
-                    .nationalID(resultSet.getString("nationalID"))
-                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .id(resultSet.getInt("ID"))
+                    .firstName(resultSet.getString("FIRST_NAME"))
+                    .lastName(resultSet.getString("LAST_NAME"))
+                    .guestType(GuestType.valueOf(resultSet.getString("GUEST_TYPE")))
+                    .passportNumber(resultSet.getString("PASSPORT_NUMBER"))
+                    .nationalID(resultSet.getString("NATIONAL_ID"))
+                    .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
         }
         return guest;
     }
 
-    public Guest findByFamily(String lastName) throws Exception {
+    public Guest findByPassportNumber(String passportNumber) throws Exception {
         Guest guest = null;
         connection = connectionProvider.getConnection();
-        preparedStatement = connection.prepareStatement("SELECT * FROM GUESTS WHERE LAST_NAME=?");
-        preparedStatement.setString(1, lastName);
-        ResultSet resultSet =preparedStatement.executeQuery();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM GUESTS WHERE PASSPORT_NUMBER=?"
+        );
+        preparedStatement.setString(1, passportNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
             guest = Guest
                     .builder()
-                    .id(resultSet.getInt("id"))
-                    .firstName(resultSet.getString("firstName"))
-                    .lastName(resultSet.getString("lastName"))
-                    .guestType(GuestType.valueOf(resultSet.getString("guestType")))
-                    .passportNumber(resultSet.getString("passportNumber"))
-                    .nationalID(resultSet.getString("nationalID"))
-                    .birthDate(resultSet.getDate("birthDate").toLocalDate())
+                    .id(resultSet.getInt("ID"))
+                    .firstName(resultSet.getString("FIRST_NAME"))
+                    .lastName(resultSet.getString("LAST_NAME"))
+                    .guestType(GuestType.valueOf(resultSet.getString("GUEST_TYPE")))
+                    .passportNumber(resultSet.getString("PASSPORT_NUMBER"))
+                    .nationalID(resultSet.getString("NATIONAL_ID"))
+                    .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
         }
         return guest;

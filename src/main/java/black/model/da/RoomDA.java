@@ -61,11 +61,12 @@ public class RoomDA implements AutoCloseable {
         if(resultSet.next()){
             room = Room
                     .builder()
-                    .id(resultSet.getInt("id"))
-                    .roomNumber(resultSet.getInt("roomNumber"))
-                    .pricePerNight(resultSet.getBigDecimal("pricePerNight"))
-                    .roomNumber(resultSet.getInt("roomNumber"))
-                    .roomClass(RoomClass.valueOf(resultSet.getString("roomClass")))
+                    .id(resultSet.getInt("ID"))
+                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                    .pricePerNight(resultSet.getBigDecimal("PRICE_PER_NIGHT"))
+                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                    .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
+                    .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
         }
         return room;
@@ -80,12 +81,12 @@ public class RoomDA implements AutoCloseable {
         if(resultSet.next()){
             room = Room
                     .builder()
-                    .id(resultSet.getInt("id"))
-                    .roomNumber(resultSet.getInt("roomNumber"))
-                    .pricePerNight(resultSet.getBigDecimal("pricePerNight"))
-                    .roomNumber(resultSet.getInt("roomNumber"))
-                    .roomCapacity(resultSet.getInt("roomCapacity"))
-                    .roomClass(RoomClass.valueOf(resultSet.getString("roomClass")))
+                    .id(resultSet.getInt("ID"))
+                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                    .pricePerNight(resultSet.getBigDecimal("PRICE_PER_NIGHT"))
+                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
+                    .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
+                    .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
         }
         return room;

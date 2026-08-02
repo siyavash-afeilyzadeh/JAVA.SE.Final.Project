@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class RoomController {
     private RoomBL roomBL = new RoomBL();
 
-    public void save(int id, int roomNumber, BigDecimal pricePerNight, int roomCapacity, RoomClass roomClass) {
+    public void save(int roomNumber, BigDecimal pricePerNight, int roomCapacity, RoomClass roomClass) {
         log.debug("Room Controller Save");
         try {
             Room room = Room
@@ -29,7 +29,7 @@ public class RoomController {
         }
     }
 
-    public void update(int id, int roomNumber, BigDecimal pricePerNight, int roomCapacity, RoomClass roomClass) {
+    public void update(int roomNumber, BigDecimal pricePerNight, int roomCapacity, RoomClass roomClass) {
         log.debug("Room Controller Update");
         try {
             Room room = Room

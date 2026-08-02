@@ -29,10 +29,7 @@ public class GuestBL {
             }
         }
     }
-
-
     //--------------Business Logic Methods--------------
-
     public void save(Guest guest) throws Exception {
         validateAge(guest);
         try (GuestDA guestDA = new GuestDA()) {

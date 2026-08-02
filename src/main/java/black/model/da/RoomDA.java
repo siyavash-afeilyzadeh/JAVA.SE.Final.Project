@@ -42,6 +42,7 @@ public class RoomDA implements AutoCloseable {
         preparedStatement.setInt(3, room.getRoomCapacity());
         preparedStatement.setString(4, room.getRoomClass().name());
         preparedStatement.setInt(5, room.getId());
+        preparedStatement.execute();
     }
     public void delete(int id) throws Exception{
         connection = connectionProvider.getConnection();
@@ -64,7 +65,6 @@ public class RoomDA implements AutoCloseable {
                     .id(resultSet.getInt("ID"))
                     .roomNumber(resultSet.getInt("ROOM_NUMBER"))
                     .pricePerNight(resultSet.getBigDecimal("PRICE_PER_NIGHT"))
-                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
                     .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
@@ -84,7 +84,6 @@ public class RoomDA implements AutoCloseable {
                     .id(resultSet.getInt("ID"))
                     .roomNumber(resultSet.getInt("ROOM_NUMBER"))
                     .pricePerNight(resultSet.getBigDecimal("PRICE_PER_NIGHT"))
-                    .roomNumber(resultSet.getInt("ROOM_NUMBER"))
                     .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();

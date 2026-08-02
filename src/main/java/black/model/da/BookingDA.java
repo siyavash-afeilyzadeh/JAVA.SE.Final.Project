@@ -8,6 +8,7 @@ import black.model.entity.enums.RoomClass;
 import black.utils.ConnectionProvider;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +92,22 @@ public class BookingDA implements AutoCloseable {
             bookingList.add(booking);
         }
         return bookingList;
+    }
+
+    public List<Integer> findReserveDates(int id, LocalDate arrivalDate, LocalDate departureDate) throws SQLException {
+        connection = connectionProvider.getConnection();
+        List<Integer> conflicts = new ArrayList<>();
+        preparedStatement = connection.prepareStatement(
+                "SELECT BOOKING_ID FROM BOOKING_REPORT WHERE ROOM_NUMBER=? AND ARRIVAL_DATE <? AND DEPARTURE_DATE >?"
+        );
+        preparedStatement.setInt(1,id);
+        preparedStatement.setDate(2, Date.valueOf(departureDate));
+        preparedStatement.setDate(3, Date.valueOf(arrivalDate));
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            conflicts.add(resultSet.getInt("BOOKING_ID"));
+        }
+        return conflicts;
     }
 
     @Override

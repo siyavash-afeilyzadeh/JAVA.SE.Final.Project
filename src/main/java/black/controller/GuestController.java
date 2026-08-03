@@ -61,6 +61,7 @@ public class GuestController {
         try{
             Guest guest = guestBL.findByID(id);
             log.info("Guest " + id + "is found.");
+            return guest;
         } catch (Exception e){
             log.error("Guest not found" + e.getMessage());
             return null;

@@ -61,31 +61,41 @@ public class GuestBL {
     }
 
     public Guest findByID(int id) throws Exception {
+        log.debug("Guest Business Logic run 'Find by ID'");
         try (GuestDA guestDA = new GuestDA()) {
+            log.info("Guest Business Logic run 'Find by ID' successfully.");
             return guestDA.findByID(id);
         }
     }
 
     public List<Guest> findByName(String firstName) throws Exception {
+        log.debug("Guest Business Logic run 'Find by Name'");
         try (GuestDA guestDA = new GuestDA()) {
+            log.info("Guest Business Logic run 'Find by Name' successfully.");
             return guestDA.findByName(firstName);
         }
     }
 
     public List<Guest> findByFamily(String lastName) throws Exception {
+        log.debug("Guest Business Logic run 'Find by Family'");
         try (GuestDA guestDA = new GuestDA()) {
+            log.info("Guest Business Logic run 'Find by Family' successfully.");
             return guestDA.findByFamily(lastName);
         }
     }
 
     public Guest findByNationalID(String nationalId) throws Exception{
+        log.debug("Guest Business Logic run 'Find by National ID'");
         try (GuestDA guestDA = new GuestDA()){
+            log.info("Guest Business Logic run 'Find by National ID' successfully.");
             return guestDA.findByNationalID(nationalId);
         }
     }
 
     public Guest findByPassportNumber(String passportNumber) throws Exception{
+        log.debug("Guest Business Logic run 'Find by Passport Number'");
         try (GuestDA guestDA = new GuestDA()) {
+            log.info("Guest Business Logic run 'Find by Passport Number' successfully.");
             return guestDA.findByPassportNumber(passportNumber);
         }
     }

@@ -6,18 +6,21 @@ import black.model.entity.Room;
 import black.model.entity.enums.GuestType;
 import black.model.entity.enums.RoomClass;
 import black.utils.ConnectionProvider;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class BookingDA implements AutoCloseable {
     private ConnectionProvider connectionProvider = new ConnectionProvider();
     private Connection connection;
     private PreparedStatement preparedStatement;
 
     public void save(Booking booking) throws SQLException {
+        log.debug("Booking Data Access Save");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "select BOOKING_SEQ.nextVal as NEXT_ID from dual"
@@ -36,9 +39,11 @@ public class BookingDA implements AutoCloseable {
         preparedStatement.setDate(5, Date.valueOf(booking.getDepartureDate()));
         preparedStatement.setInt(6, booking.getPartySize());
         preparedStatement.execute();
+        log.info("Booking Data Access save Booking successfully");
     }
 
     public void update(Booking booking) throws SQLException {
+        log.debug("Booking Data Access Update");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "UPDATE BOOKINGS SET GUEST_ID=?, ROOM_ID=?, ARRIVAL_DATE=?, DEPARTURE_DATE=?, PARTY_SIZE=? WHERE ID=?"
@@ -50,18 +55,22 @@ public class BookingDA implements AutoCloseable {
         preparedStatement.setInt(5, booking.getPartySize());
         preparedStatement.setInt(6, booking.getId());
         preparedStatement.execute();
+        log.info("Booking Data Access update Booking successfully");
     }
 
     public void delete(int id) throws SQLException {
+        log.debug("Booking Data Access Delete");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "DELETE FROM BOOKINGS WHERE ID=?"
         );
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+        log.info("Booking Data Access delete Booking successfully");
     }
 
     public List<Booking> findAll() throws SQLException {
+        log.debug("Booking Data Access run 'Find All'");
         connection = connectionProvider.getConnection();
         List<Booking> bookingList = new ArrayList<>();
         preparedStatement = connection.prepareStatement(
@@ -90,11 +99,13 @@ public class BookingDA implements AutoCloseable {
                     );
 
             bookingList.add(booking);
+            log.info("Booking Data Access add founded Booking to list successfully.");
         }
         return bookingList;
     }
 
     public List<Integer> findReserveDates(int id, LocalDate arrivalDate, LocalDate departureDate) throws SQLException {
+        log.debug("Booking Data Access run 'Find Reserve Dates'");
         connection = connectionProvider.getConnection();
         List<Integer> conflicts = new ArrayList<>();
         preparedStatement = connection.prepareStatement(
@@ -107,6 +118,7 @@ public class BookingDA implements AutoCloseable {
         while (resultSet.next()){
             conflicts.add(resultSet.getInt("BOOKING_ID"));
         }
+        log.info("Booking Data Access return find reserve dates successfully.");
         return conflicts;
     }
 

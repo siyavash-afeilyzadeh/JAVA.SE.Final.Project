@@ -2,9 +2,12 @@ package black.model.bl;
 
 import black.model.da.BookingDA;
 import black.model.entity.Booking;
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 public class BookingBL {
     //--------------Validation Methods--------------
     public void validateDate(Booking booking) throws Exception{
@@ -32,29 +35,37 @@ public class BookingBL {
     }
     //--------------Business Logic Methods--------------
     public void save(Booking booking) throws Exception {
+        log.debug("Booking Business Logic Save");
         validateDate(booking);
         try (BookingDA bookingDA = new BookingDA()) {
             validateConflict(booking, bookingDA);
             bookingDA.save(booking);
+            log.info("Booking Business Logic save Booking successfully");
         }
     }
 
     public void update(Booking booking) throws Exception {
+        log.debug("Booking Business Logic Update");
         validateDate(booking);
         try (BookingDA bookingDA = new BookingDA()) {
             validateConflict(booking, bookingDA);
             bookingDA.update(booking);
+            log.info("Booking Business Logic update Booking successfully");
         }
     }
 
     public void delete(int id) throws Exception {
+        log.debug("Booking Business Logic Delete");
         try (BookingDA bookingDA = new BookingDA()) {
             bookingDA.delete(id);
+            log.info("Booking Business Logic delete Booking successfully");
         }
     }
 
     public List<Booking> findAll() throws Exception {
+        log.debug("Booking Business Logic run findAll");
         try (BookingDA bookingDA = new BookingDA()) {
+            log.info("Booking Business Logic run 'Find All' successfully.");
             return bookingDA.findAll();
         }
     }

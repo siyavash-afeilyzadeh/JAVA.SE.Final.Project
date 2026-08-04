@@ -3,11 +3,13 @@ package black.model.bl;
 import black.model.da.GuestDA;
 import black.model.entity.Guest;
 import black.model.entity.enums.GuestType;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+@Slf4j
 public class GuestBL {
     //--------------Validation Methods--------------
     public void validateAge(Guest guest) throws Exception {
@@ -31,24 +33,30 @@ public class GuestBL {
     }
     //--------------Business Logic Methods--------------
     public void save(Guest guest) throws Exception {
+        log.debug("Guest Business Logic Save");
         validateAge(guest);
         try (GuestDA guestDA = new GuestDA()) {
             validateIdentity(guest, guestDA);
             guestDA.save(guest);
+            log.info("Guest Business Logic save" + guest.getDisplayGuest() + "successfully");
         }
     }
 
     public void update(Guest guest) throws Exception {
+        log.debug("Guest Business Logic Update");
         validateAge(guest);
         try (GuestDA guestDA = new GuestDA()) {
             validateIdentity(guest, guestDA);
             guestDA.update(guest);
+            log.info("Guest Business Logic update" + guest.getDisplayGuest() + "successfully");
         }
     }
 
     public void delete(int id) throws Exception {
+        log.debug("Guest Business Logic Delete");
         try (GuestDA guestDA = new GuestDA()) {
             guestDA.delete(id);
+            log.info("Guest Business Logic delete Room successfully");
         }
     }
 

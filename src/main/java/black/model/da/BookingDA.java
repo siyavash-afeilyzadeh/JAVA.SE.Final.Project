@@ -99,8 +99,9 @@ public class BookingDA implements AutoCloseable {
                     );
 
             bookingList.add(booking);
-            log.info("Booking Data Access add founded Booking to list successfully.");
+            log.debug("Booking Data Access add founded Booking to list of 'findAll' successfully.");
         }
+        log.info("Booking Data Access run 'Find All' successfully.");
         return bookingList;
     }
 
@@ -117,6 +118,7 @@ public class BookingDA implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             conflicts.add(resultSet.getInt("BOOKING_ID"));
+            log.debug("Booking Data Access add founded Booking to list of 'findReserveDates' successfully.");
         }
         log.info("Booking Data Access return find reserve dates successfully.");
         return conflicts;

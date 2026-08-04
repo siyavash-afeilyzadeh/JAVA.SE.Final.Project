@@ -40,7 +40,7 @@ public class BookingBL {
         try (BookingDA bookingDA = new BookingDA()) {
             validateConflict(booking, bookingDA);
             bookingDA.save(booking);
-            log.info("Booking Business Logic save Booking successfully");
+            log.info("Booking Business Logic save" + booking + "successfully");
         }
     }
 
@@ -50,7 +50,7 @@ public class BookingBL {
         try (BookingDA bookingDA = new BookingDA()) {
             validateConflict(booking, bookingDA);
             bookingDA.update(booking);
-            log.info("Booking Business Logic update Booking successfully");
+            log.info("Booking Business Logic update" + booking + "successfully");
         }
     }
 

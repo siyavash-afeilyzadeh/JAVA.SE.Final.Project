@@ -39,7 +39,7 @@ public class BookingDA implements AutoCloseable {
         preparedStatement.setDate(5, Date.valueOf(booking.getDepartureDate()));
         preparedStatement.setInt(6, booking.getPartySize());
         preparedStatement.execute();
-        log.info("Booking Data Access save Booking successfully");
+        log.info("Booking Data Access save" + booking + "successfully");
     }
 
     public void update(Booking booking) throws SQLException {
@@ -55,7 +55,7 @@ public class BookingDA implements AutoCloseable {
         preparedStatement.setInt(5, booking.getPartySize());
         preparedStatement.setInt(6, booking.getId());
         preparedStatement.execute();
-        log.info("Booking Data Access update Booking successfully");
+        log.info("Booking Data Access update" + booking + "successfully");
     }
 
     public void delete(int id) throws SQLException {

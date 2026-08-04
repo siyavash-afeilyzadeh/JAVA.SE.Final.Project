@@ -3,17 +3,20 @@ package black.model.da;
 import black.model.entity.Room;
 import black.model.entity.enums.RoomClass;
 import black.utils.ConnectionProvider;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+@Slf4j
 public class RoomDA implements AutoCloseable {
     private ConnectionProvider connectionProvider = new ConnectionProvider();
     private Connection connection;
     private PreparedStatement preparedStatement;
 
     public void save(Room room) throws Exception{
+        log.debug("Room Data Access Save");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "select ROOM_SEQ.nextval as NEXT_ID from DUAL"
@@ -31,8 +34,10 @@ public class RoomDA implements AutoCloseable {
         preparedStatement.setInt(4, room.getRoomCapacity());
         preparedStatement.setString(5,room.getRoomClass().name());
         preparedStatement.execute();
+        log.info("Room Data Access save" + room.getDisplayRoom() + "successfully");
     }
     public void update(Room room) throws Exception{
+        log.debug("Room Data Access Update");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "UPDATE ROOMS SET ROOM_NUMBER=?, PRICE_PER_NIGHT=?, ROOM_CAPACITY=?, ROOM_CLASS=? WHERE ID=?"
@@ -43,17 +48,21 @@ public class RoomDA implements AutoCloseable {
         preparedStatement.setString(4, room.getRoomClass().name());
         preparedStatement.setInt(5, room.getId());
         preparedStatement.execute();
+        log.info("Room Data Access update" + room.getDisplayRoom() + "successfully");
     }
     public void delete(int id) throws Exception{
+        log.debug("Booking Data Access Delete");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "DELETE FROM ROOMS WHERE ID=?"
         );
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
+        log.info("Booking Data Access delete Booking successfully");
     }
 
     public Room findByID(int id) throws Exception{
+        log.debug("Room Data Access run 'Find by ID'");
         Room room = null;
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ID=?");
@@ -69,10 +78,12 @@ public class RoomDA implements AutoCloseable {
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
         }
+        log.info("Room has founded: " + room.getDisplayRoom());
         return room;
     }
 
     public Room findByRoomNumber (int roomNumber) throws Exception{
+        log.debug("Room Data Access run 'Find by Room Number'");
         Room room = null;
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ROOM_NUMBER=?");
@@ -88,6 +99,7 @@ public class RoomDA implements AutoCloseable {
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
         }
+        log.info("Room has founded: " + room.getDisplayRoom());
         return room;
     }
 

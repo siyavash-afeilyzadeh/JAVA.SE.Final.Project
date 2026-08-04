@@ -2,10 +2,13 @@ package black.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@SuperBuilder
 public class Booking {
     private int id;
     private Guest guest;

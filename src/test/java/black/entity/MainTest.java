@@ -4,8 +4,10 @@ import black.controller.GuestController;
 import black.controller.RoomController;
 import black.model.bl.GuestBL;
 import black.model.bl.RoomBL;
+import black.model.da.BookingDA;
 import black.model.da.GuestDA;
 import black.model.da.RoomDA;
+import black.model.entity.Booking;
 import black.model.entity.Guest;
 import black.model.entity.Room;
 import black.model.entity.enums.GuestType;
@@ -31,29 +33,58 @@ public class MainTest {
 
         Guest guest2 = Guest
                 .builder()
+                .id(11)
                 .firstName("Ethan")
                 .lastName("Balmour")
                 .guestType(GuestType.FOREIGN)
                 .passportNumber("T45235545")
-                .birthDate(LocalDate.of(1981, 1, 23))
+                .birthDate(LocalDate.of(2005, 11, 11))
                 .build();
 
         Room room1 = Room
                 .builder()
                 .roomNumber(1)
                 .pricePerNight(BigDecimal.valueOf(243.21))
-                .roomCapacity(4)
+                .roomCapacity(6)
                 .roomClass(RoomClass.DELUXE)
                 .build();
 
         Room room2 = Room
                 .builder()
-                .id(4)
                 .roomNumber(5)
                 .pricePerNight(BigDecimal.valueOf(110))
                 .roomCapacity(2)
                 .roomClass(RoomClass.STANDARD)
                 .build();
+
+        Booking booking1 = Booking
+                .builder()
+                .guest(Guest.builder().id(10).build())
+                .room(Room.builder().id(8).build())
+                .arrivalDate(LocalDate.of(2020,11,8 ))
+                .departureDate(LocalDate.of(2020,11,15))
+                .partySize(2)
+                .build();
+        Booking booking2 = Booking
+                .builder()
+                .guest(Guest.builder().id(11).build())
+                .room(Room.builder().id(7).build())
+                .arrivalDate(LocalDate.of(2020,10,12 ))
+                .departureDate(LocalDate.of(2020,10,17))
+                .partySize(5)
+                .build();
+
+
+
+//        try(BookingDA bookingDA = new BookingDA()){
+//            bookingDA.save(booking1);
+//            bookingDA.save(booking2);
+//            bookingDA.delete(3);
+//            bookingDA.delete(4);
+//        }catch (Exception e){
+//            log.error("Faild to Run" + e.getMessage());}
+
+
 
 //        try (RoomDA roomDA = new RoomDA()){
 //            roomDA.save(room1);
@@ -96,10 +127,6 @@ public class MainTest {
 //                );
 //        roomController.delete(5);
 //        roomController.delete(6);
-
-
-
-
 
 
 //        try (GuestDA guestDA = new GuestDA()) {

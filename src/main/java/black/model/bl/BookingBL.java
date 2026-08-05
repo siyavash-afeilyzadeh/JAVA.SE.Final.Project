@@ -21,7 +21,7 @@ public class BookingBL {
 
     public void validateConflict(Booking booking, BookingDA bookingDA) throws Exception{
         List<Integer> conflicts = bookingDA.findReserveDates(
-                booking.getRoom().getRoomNumber(),
+                booking.getRoom().getId(),
                 booking.getArrivalDate(),
                 booking.getDepartureDate()
         );
@@ -63,10 +63,18 @@ public class BookingBL {
     }
 
     public List<Booking> findAll() throws Exception {
-        log.debug("Booking Business Logic run findAll");
+        log.debug("Booking Business Logic run 'findAll'");
         try (BookingDA bookingDA = new BookingDA()) {
             log.info("Booking Business Logic run 'Find All' successfully.");
             return bookingDA.findAll();
+        }
+    }
+
+    public List<Booking> findByRoomNumber(int roomNumber) throws Exception{
+        log.debug("Booking Business Logic run 'findByRoomNumber'");
+        try(BookingDA bookingDA = new BookingDA()){
+            log.info("Booking Business Logic run 'Find By Room Number' successfully.");
+            return bookingDA.findByRoomNumber(roomNumber);
         }
     }
 }

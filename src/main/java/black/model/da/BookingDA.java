@@ -71,8 +71,8 @@ public class BookingDA implements AutoCloseable {
 
     public List<Booking> findAll() throws SQLException {
         log.debug("Booking Data Access run 'Find All'");
-        connection = connectionProvider.getConnection();
         List<Booking> bookingList = new ArrayList<>();
+        connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM BOOKING_REPORT ORDER BY ROOM_NUMBER"
         );
@@ -105,14 +105,14 @@ public class BookingDA implements AutoCloseable {
         return bookingList;
     }
 
-    public List<Integer> findReserveDates(int id, LocalDate arrivalDate, LocalDate departureDate) throws SQLException {
+    public List<Integer> findReserveDates(int roomId, LocalDate arrivalDate, LocalDate departureDate) throws SQLException {
         log.debug("Booking Data Access run 'Find Reserve Dates'");
-        connection = connectionProvider.getConnection();
         List<Integer> conflicts = new ArrayList<>();
+        connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
-                "SELECT BOOKING_ID FROM BOOKING_REPORT WHERE ROOM_NUMBER=? AND ARRIVAL_DATE <? AND DEPARTURE_DATE >?"
+                "SELECT BOOKING_ID FROM BOOKING_REPORT WHERE ROOM_ID=? AND ARRIVAL_DATE <? AND DEPARTURE_DATE >?"
         );
-        preparedStatement.setInt(1,id);
+        preparedStatement.setInt(1,roomId);
         preparedStatement.setDate(2, Date.valueOf(departureDate));
         preparedStatement.setDate(3, Date.valueOf(arrivalDate));
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -122,6 +122,44 @@ public class BookingDA implements AutoCloseable {
         }
         log.info("Booking Data Access return find reserve dates successfully.");
         return conflicts;
+    }
+
+    public List<Booking> findByRoomNumber(int roomNumber) throws SQLException{
+        log.debug("Booking Data Access run 'Find By Room Number'");
+        List<Booking> bookingList = new ArrayList<>();
+        connection = connectionProvider.getConnection();
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM BOOKING_REPORT WHERE ROOM_NUMBER = ?"
+        );
+        preparedStatement.setInt(1, roomNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            Guest guest = new Guest(
+                    resultSet.getInt("GUEST_ID"),
+                    resultSet.getString("GUEST_FIRST_NAME"),
+                    resultSet.getString("GUEST_LAST_NAME"),
+                    GuestType.valueOf(resultSet.getString("GUEST_TYPE"))
+            );
+
+            Room room = new Room(
+                    resultSet.getInt("ROOM_ID"),
+                    resultSet.getInt("ROOM_NUMBER"),
+                    RoomClass.valueOf(resultSet.getString("ROOM_CLASS"))
+            );
+
+            Booking booking = new Booking(
+                    resultSet.getInt("BOOKING_ID"),
+                    guest,
+                    room,
+                    resultSet.getDate("ARRIVAL_DATE").toLocalDate(),
+                    resultSet.getDate("DEPARTURE_DATE").toLocalDate(),
+                    resultSet.getInt("PARTY_SIZE")
+            );
+            bookingList.add(booking);
+            log.info("Booking Data Access add Booking successfully.");
+        }
+        log.info("Booking Data Access run 'Find by Room Number' successfully.");
+        return bookingList;
     }
 
     @Override

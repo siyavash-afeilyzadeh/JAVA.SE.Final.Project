@@ -13,11 +13,16 @@ import java.util.List;
 public class BookingController {
     private BookingBL bookingBL = new BookingBL();
 
-    public void save(Guest guest, Room room, LocalDate arrivalDate, LocalDate departureDate, int partySize){
+    public void save(int guestId, int roomId, LocalDate arrivalDate, LocalDate departureDate, int partySize){
         log.debug("Booking Controller Save");
         try{
-            Booking booking = Booking
-                    .builder()
+            Guest guest = Guest.builder()
+                    .id(guestId)
+                    .build();
+            Room room = Room.builder()
+                    .id(roomId)
+                    .build();
+            Booking booking = Booking.builder()
                     .guest(guest)
                     .room(room)
                     .arrivalDate(arrivalDate)
@@ -30,11 +35,17 @@ public class BookingController {
             log.error("Failed to save Booking");
         }
     }
-    public void update(Guest guest, Room room, LocalDate arrivalDate, LocalDate departureDate, int partySize){
+    public void update(int id, int guestId, int roomId, LocalDate arrivalDate, LocalDate departureDate, int partySize){
         log.debug("Booking Controller Update");
         try{
-            Booking booking = Booking
-                    .builder()
+            Guest guest = Guest.builder()
+                    .id(guestId)
+                    .build();
+            Room room = Room.builder()
+                    .id(roomId)
+                    .build();
+            Booking booking = Booking.builder()
+                    .id(id)
                     .guest(guest)
                     .room(room)
                     .arrivalDate(arrivalDate)

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
 public class GuestDA implements AutoCloseable {
     private ConnectionProvider connectionProvider = new ConnectionProvider();
@@ -85,8 +86,10 @@ public class GuestDA implements AutoCloseable {
                     .nationalID(resultSet.getString("NATIONAL_ID"))
                     .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
+            log.info("Guest found: " + guest.getDisplayGuest());
+        } else {
+            log.info("No guest found with ID: " + id);
         }
-        log.info("Guest has founded: " + guest.getDisplayGuest());
         return guest;
     }
 
@@ -151,7 +154,7 @@ public class GuestDA implements AutoCloseable {
         );
         preparedStatement.setString(1, nationalId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             guest = Guest
                     .builder()
                     .id(resultSet.getInt("ID"))
@@ -162,8 +165,10 @@ public class GuestDA implements AutoCloseable {
                     .nationalID(resultSet.getString("NATIONAL_ID"))
                     .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
+            log.info("Guest found: " + guest.getDisplayGuest());
+        } else {
+            log.info("No guest found with ID: " + nationalId);
         }
-        log.info("Guest has founded: " + guest.getDisplayGuest());
         return guest;
     }
 
@@ -176,7 +181,7 @@ public class GuestDA implements AutoCloseable {
         );
         preparedStatement.setString(1, passportNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             guest = Guest
                     .builder()
                     .id(resultSet.getInt("ID"))
@@ -187,8 +192,10 @@ public class GuestDA implements AutoCloseable {
                     .nationalID(resultSet.getString("NATIONAL_ID"))
                     .birthDate(resultSet.getDate("BIRTH_DATE").toLocalDate())
                     .build();
+            log.info("Guest found: " + guest.getDisplayGuest());
+        } else {
+            log.info("No guest found with passport number: " + passportNumber);
         }
-        log.info("Guest has founded: " + guest.getDisplayGuest());
         return guest;
     }
 

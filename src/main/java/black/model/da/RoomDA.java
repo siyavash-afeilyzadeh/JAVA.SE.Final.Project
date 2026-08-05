@@ -15,7 +15,7 @@ public class RoomDA implements AutoCloseable {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public void save(Room room) throws Exception{
+    public void save(Room room) throws Exception {
         log.debug("Room Data Access Save");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
@@ -32,11 +32,12 @@ public class RoomDA implements AutoCloseable {
         preparedStatement.setInt(2, room.getRoomNumber());
         preparedStatement.setBigDecimal(3, room.getPricePerNight());
         preparedStatement.setInt(4, room.getRoomCapacity());
-        preparedStatement.setString(5,room.getRoomClass().name());
+        preparedStatement.setString(5, room.getRoomClass().name());
         preparedStatement.execute();
         log.info("Room Data Access save" + room.getDisplayRoom() + "successfully");
     }
-    public void update(Room room) throws Exception{
+
+    public void update(Room room) throws Exception {
         log.debug("Room Data Access Update");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
@@ -50,7 +51,8 @@ public class RoomDA implements AutoCloseable {
         preparedStatement.execute();
         log.info("Room Data Access update" + room.getDisplayRoom() + "successfully");
     }
-    public void delete(int id) throws Exception{
+
+    public void delete(int id) throws Exception {
         log.debug("Booking Data Access Delete");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
@@ -61,14 +63,14 @@ public class RoomDA implements AutoCloseable {
         log.info("Booking Data Access delete Booking successfully");
     }
 
-    public Room findByID(int id) throws Exception{
+    public Room findByID(int id) throws Exception {
         log.debug("Room Data Access run 'Find by ID'");
         Room room = null;
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ID=?");
         preparedStatement.setInt(1, id);
-        ResultSet resultSet=preparedStatement.executeQuery();
-        if(resultSet.next()){
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
             room = Room
                     .builder()
                     .id(resultSet.getInt("ID"))
@@ -77,19 +79,21 @@ public class RoomDA implements AutoCloseable {
                     .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
+            log.info("Room found: " + room.getDisplayRoom());
+        } else {
+            log.info("No room found with ID: " + id);
         }
-        log.info("Room has founded: " + room.getDisplayRoom());
         return room;
     }
 
-    public Room findByRoomNumber (int roomNumber) throws Exception{
+    public Room findByRoomNumber(int roomNumber) throws Exception {
         log.debug("Room Data Access run 'Find by Room Number'");
         Room room = null;
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement("SELECT * FROM ROOMS WHERE ROOM_NUMBER=?");
         preparedStatement.setInt(1, roomNumber);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if(resultSet.next()){
+        if (resultSet.next()) {
             room = Room
                     .builder()
                     .id(resultSet.getInt("ID"))
@@ -98,13 +102,16 @@ public class RoomDA implements AutoCloseable {
                     .roomCapacity(resultSet.getInt("ROOM_CAPACITY"))
                     .roomClass(RoomClass.valueOf(resultSet.getString("ROOM_CLASS")))
                     .build();
+            log.info("Room found: " + room.getDisplayRoom());
+        } else {
+            log.info("No room found with room number: " + roomNumber);
         }
-        log.info("Room has founded: " + room.getDisplayRoom());
+
         return room;
     }
 
     @Override
-    public void close() throws Exception{
+    public void close() throws Exception {
         preparedStatement.close();
         connection.close();
     }

@@ -29,11 +29,12 @@ public class GuestController {
             log.error("Failed to save guest: " + e.getMessage());
         }
     }
-    public void update(String firstName,String lastName, GuestType guestType, String passportNumber, String nationalID, LocalDate birthDate){
+    public void update(int id, String firstName,String lastName, GuestType guestType, String passportNumber, String nationalID, LocalDate birthDate){
         log.debug("Guest Controller Update");
         try{
             Guest guest = Guest
                     .builder()
+                    .id(id)
                     .firstName(firstName)
                     .lastName(lastName)
                     .guestType(guestType)

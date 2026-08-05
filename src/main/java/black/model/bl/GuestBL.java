@@ -56,7 +56,7 @@ public class GuestBL {
         log.debug("Guest Business Logic Delete");
         try (GuestDA guestDA = new GuestDA()) {
             guestDA.delete(id);
-            log.info("Guest Business Logic delete Room successfully");
+            log.info("Guest Business Logic delete Guest successfully");
         }
     }
 

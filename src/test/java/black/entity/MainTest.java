@@ -1,5 +1,6 @@
 package black.entity;
 
+import black.controller.GuestController;
 import black.model.bl.GuestBL;
 import black.model.da.GuestDA;
 import black.model.entity.Guest;
@@ -28,10 +29,10 @@ public class MainTest {
         Guest guest2 = Guest
                 .builder()
                 .firstName("Ethan")
-                .lastName("HornSmith")
+                .lastName("Balmour")
                 .guestType(GuestType.FOREIGN)
-                .passportNumber("T45678945")
-                .birthDate(LocalDate.of(1997, 5, 14))
+                .passportNumber("T45235545")
+                .birthDate(LocalDate.of(1981, 1, 23))
                 .build();
 
 //        try (GuestDA guestDA = new GuestDA()) {
@@ -45,13 +46,36 @@ public class MainTest {
 //        }
 
 
-        GuestBL guestBL = new GuestBL();
-        try {
-            guestBL.save(guest1);
-            guestBL.save(guest2);
-        } catch (Exception e){
-            log.error("Faild to Run " + e.getMessage());
-        }
+//        System.out.println(guest2.getId());;
+//        GuestBL guestBL = new GuestBL();
+//        try {
+//            guestBL.delete(6);
+//            guestBL.delete(7);
+//            guestBL.save(guest1);
+//            guestBL.save(guest2);
+//            guestBL.update(guest2);
+//        } catch (Exception e){
+//            log.error("Faild to Run " + e.getMessage());
+//        }
+
+        GuestController guestController = new GuestController();
+//        guestController.save(
+//                "Siyavash",
+//                "Afeilyzadeh",
+//                GuestType.DOMESTIC,
+//                "",
+//                "123456789",
+//                LocalDate.of(1981, 1, 23));
+//        guestController.update(
+//                9,
+//                "John",
+//                "MacTovish",
+//                GuestType.FOREIGN,
+//                "T45225545",
+//                "",
+//                LocalDate.of(1984, 5, 17));
+        guestController.delete(8);
+        guestController.delete(9);
 
     }
 }

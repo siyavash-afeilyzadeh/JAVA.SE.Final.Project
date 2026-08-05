@@ -53,14 +53,14 @@ public class RoomDA implements AutoCloseable {
     }
 
     public void delete(int id) throws Exception {
-        log.debug("Booking Data Access Delete");
+        log.debug("Room Data Access Delete");
         connection = connectionProvider.getConnection();
         preparedStatement = connection.prepareStatement(
                 "DELETE FROM ROOMS WHERE ID=?"
         );
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
-        log.info("Booking Data Access delete Booking successfully");
+        log.info("Room Data Access delete Room successfully");
     }
 
     public Room findByID(int id) throws Exception {

@@ -1,6 +1,7 @@
 package black.entity;
 
 import black.controller.GuestController;
+import black.controller.RoomController;
 import black.model.bl.GuestBL;
 import black.model.bl.RoomBL;
 import black.model.da.GuestDA;
@@ -63,8 +64,8 @@ public class MainTest {
 //        } catch (Exception e) {
 //            log.error("Faild to Run" + e.getMessage());
 //        }
-        RoomBL roomBL = new RoomBL();
-        try {
+//        RoomBL roomBL = new RoomBL();
+//        try {
 //            roomBL.save(room1);
 //            roomBL.save(room2);
 //            roomBL.update(room2);
@@ -73,6 +74,28 @@ public class MainTest {
 //        } catch (Exception e){
 //            log.error("Faild to Run " + e.getMessage());
 //        }
+//        RoomController roomController = new RoomController();
+//        roomController.save(
+//                1,
+//                BigDecimal.valueOf(243.21),
+//                4,
+//                RoomClass.DELUXE
+//        );
+//
+//        roomController.save(
+//                5,
+//                BigDecimal.valueOf(110),
+//                2,
+//                RoomClass.STANDARD
+//        );
+//        roomController.update(6,
+//                5,
+//                BigDecimal.valueOf(988),
+//                6,
+//                RoomClass.DELUXE
+//                );
+//        roomController.delete(5);
+//        roomController.delete(6);
 
 
 
